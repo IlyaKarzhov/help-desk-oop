@@ -1,6 +1,6 @@
 package helpdesk.model;
 
-public class User {
+public abstract class User {
     private long id;
     private String name;
     private String email;
@@ -15,7 +15,5 @@ public class User {
     public String getName() { return name; }
     public String getEmail() { return email; }
 
-    public void performAction() {
-        System.out.println("Пользователь работает с системой");
-    }
+    public abstract void performAction();
 }
