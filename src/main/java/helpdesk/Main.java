@@ -5,6 +5,9 @@ import helpdesk.model.Customer;
 import helpdesk.model.SupportAgent;
 import helpdesk.model.Ticket;
 import helpdesk.model.User;
+import helpdesk.service.ConsoleNotificationService;
+import helpdesk.service.NotificationService;
+import helpdesk.service.TicketService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +19,14 @@ public class Main {
         Ticket ticket = new Ticket(1, "Не работает Wi-Fi", "Ноутбук не подключается к сети");
         System.out.println(ticket.getTitle() + " | " + ticket.getStatus());
 
-        ticket.startProcessing();
+        NotificationService notificationService = new ConsoleNotificationService();
+        TicketService ticketService = new TicketService(notificationService);
+
+        ticketService.startTicket(ticket);
         System.out.println("Статус: " + ticket.getStatus());
-        ticket.resolve();
+        ticketService.resolveTicket(ticket);
         System.out.println("Статус: " + ticket.getStatus());
-        ticket.close();
+        ticketService.closeTicket(ticket);
         System.out.println("Статус: " + ticket.getStatus());
 
         System.out.println();
