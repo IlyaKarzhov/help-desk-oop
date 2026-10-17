@@ -53,5 +53,19 @@ public class Main {
         for (User user : users) {
             user.performAction();
         }
+
+        System.out.println();
+        Ticket mailTicket = new Ticket(4, "Нет доступа к почте", "Не открывается почта");
+        System.out.println(mailTicket);
+        System.out.println("Создана: " + mailTicket.getCreatedAt());
+        mailTicket.cancel();
+        System.out.println(mailTicket);
+        ticket.cancel(); // первая уже закрыта, отменить нельзя
+
+        try {
+            new Ticket(5, "", "Заявка без названия");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 }

@@ -1,22 +1,30 @@
 package helpdesk.model;
 
+import java.time.LocalDateTime;
+
 public class Ticket {
     private long id;
     private String title;
     private String description;
     private TicketStatus status;
+    private LocalDateTime createdAt;
 
     public Ticket(long id, String title, String description) {
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Название заявки не может быть пустым");
+        }
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = TicketStatus.NEW;
+        this.createdAt = LocalDateTime.now();
     }
 
     public long getId() { return id; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public TicketStatus getStatus() { return status; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 
     public void startProcessing() {
         if (status != TicketStatus.NEW) {
@@ -40,6 +48,14 @@ public class Ticket {
             return;
         }
         status = TicketStatus.CLOSED;
+    }
+
+    public void cancel() {
+        if (status == TicketStatus.CLOSED) {
+            System.out.println("Ошибка: закрытую заявку отменить нельзя");
+            return;
+        }
+        status = TicketStatus.CANCELLED;
     }
 
     @Override
