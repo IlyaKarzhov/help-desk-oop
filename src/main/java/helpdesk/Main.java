@@ -8,6 +8,7 @@ import helpdesk.model.User;
 import helpdesk.repository.TicketRepository;
 import helpdesk.service.ConsoleNotificationService;
 import helpdesk.service.NotificationService;
+import helpdesk.service.SmsNotificationService;
 import helpdesk.service.TicketService;
 
 import java.util.ArrayList;
@@ -67,5 +68,12 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка: " + e.getMessage());
         }
+
+        System.out.println();
+        Ticket mouseTicket = new Ticket(6, "Не работает мышь", "Мышь не реагирует на нажатия");
+        mouseTicket.close(); // ещё не RESOLVED
+
+        TicketService smsService = new TicketService(new SmsNotificationService());
+        smsService.startTicket(mouseTicket);
     }
 }
